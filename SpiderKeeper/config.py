@@ -23,20 +23,32 @@ CSRF_ENABLED = True
 
 # Use a secure, unique and absolutely secret key for
 # signing the data.
-CSRF_SESSION_KEY = "secret"
+CSRF_SESSION_KEY = os.environ.get("CSRF_SESSION_KEY")
+if not CSRF_SESSION_KEY:
+    CSRF_SESSION_KEY = "secret"
 
 # Secret key for signing cookies
-SECRET_KEY = "secret"
+SECRET_KEY = os.environ.get("SECRET_KEY")
+if not SECRET_KEY:
+    SECRET_KEY = "secret"
 
 # log
 LOG_LEVEL = 'INFO'
 
 # spider services
 SERVER_TYPE = 'scrapyd'
-SERVERS = ['http://localhost:6800']
+SCRAPYD_SERVER = os.environ.get("SCRAPYD_SERVER")
+if not SCRAPYD_SERVER:
+    SCRAPYD_SERVER = 'http://localhost:6800'
+SERVERS = [SCRAPYD_SERVER]
 
 # basic auth
 NO_AUTH = False
-BASIC_AUTH_USERNAME = 'admin'
-BASIC_AUTH_PASSWORD = 'admin'
+BASIC_AUTH_USERNAME = os.environ.get("BASIC_AUTH_USERNAME")
+if not BASIC_AUTH_USERNAME:
+    BASIC_AUTH_USERNAME = 'admin'
+BASIC_AUTH_PASSWORD = os.environ.get("BASIC_AUTH_PASSWORD")
+if not BASIC_AUTH_PASSWORD:
+    BASIC_AUTH_PASSWORD = 'admin'
+
 BASIC_AUTH_FORCE = True
